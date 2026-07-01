@@ -1,0 +1,214 @@
+{
+  "info": {
+    "_postman_id": "2cb6effe-9ab4-45b8-99d2-d54187e7ca3e",
+    "name": "CreatioTesing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30276322"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const cookies = pm.cookies;\r",
+              "\r",
+              "const bpmcsrf = cookies.get(\"BPMCSRF\");\r",
+              "const aspxauth = cookies.get(\".ASPXAUTH\");\r",
+              "\r",
+              "if (bpmcsrf) {\r",
+              "    pm.collectionVariables.set(\"BPMCSRF\", bpmcsrf);\r",
+              "    console.log(\"BPMCSRF saved:\", bpmcsrf);\r",
+              "} else {\r",
+              "    console.warn(\"BPMCSRF not found\");\r",
+              "}\r",
+              "\r",
+              "if (aspxauth) {\r",
+              "    pm.collectionVariables.set(\"ASPXAUTH\", aspxauth);\r",
+              "    console.log(\".ASPXAUTH saved:\", aspxauth);\r",
+              "} else {\r",
+              "    console.warn(\".ASPXAUTH not found\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disabledSystemHeaders": {
+          "accept": true,
+          "accept-encoding": true,
+          "connection": true,
+          "user-agent": true
+        }
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "charset",
+            "value": "utf-8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"UserName\": \"{{login}}\",\r\n    \"UserPassword\": \"{{password}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/ServiceModel/AuthService.svc/Login",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "ServiceModel",
+            "AuthService.svc",
+            "Login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OAuth dev",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "",
+              "type": "text",
+              "uuid": "ab7fd07d-e2ab-4043-b24a-03ea5c57c01e"
+            },
+            {
+              "key": "client_secret",
+              "value": "",
+              "type": "text",
+              "uuid": "291e5ec8-d7f8-4738-b9a3-7292466456f6"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/connect/token",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Base POST Request",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "charset",
+            "value": "utf-8",
+            "type": "text"
+          },
+          {
+            "key": "BPMCSRF",
+            "value": "{{BPMCSRF}}",
+            "type": "text"
+          },
+          {
+            "key": ".ASPXAUTH",
+            "value": "{{ASPXAUTH}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"Param1\": \"param\",\r\n    \"Param2\": \"param\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/0/ServiceModel/UsrCustomConfigurationService.svc/GetContactIdByName",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "0",
+            "ServiceModel",
+            "UsrCustomConfigurationService.svc",
+            "GetContactIdByName"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "login",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "url",
+      "value": ""
+    },
+    {
+      "key": "BPMCSRF",
+      "value": ""
+    },
+    {
+      "key": "ASPXAUTH",
+      "value": ""
+    }
+  ]
+}
