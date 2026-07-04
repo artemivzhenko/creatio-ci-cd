@@ -163,6 +163,59 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Get lookup values",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "charset",
+            "value": "utf-8",
+            "type": "text"
+          },
+          {
+            "key": "BPMCSRF",
+            "value": "{{BPMCSRF}}",
+            "type": "text"
+          },
+          {
+            "key": ".ASPXAUTH",
+            "value": "{{ASPXAUTH}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"Param1\": \"param\",\r\n    \"Param2\": \"param\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/0/odata/{{lookupName}}?$select=Name,Id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "0",
+            "odata",
+            "{{lookupName}}"
+          ],
+          "query": [
+            {
+              "key": "$select",
+              "value": "Name,Id"
+            }
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
@@ -208,6 +261,10 @@
     },
     {
       "key": "ASPXAUTH",
+      "value": ""
+    },
+    {
+      "key": "lookupName",
       "value": ""
     }
   ]

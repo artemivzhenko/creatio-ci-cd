@@ -241,6 +241,21 @@ def cmd_deploy_oauth(args):
 
 
 # ---------------------------------------------------------------------------
+# validate-processes
+# ---------------------------------------------------------------------------
+
+def cmd_validate_processes(args):
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from importlib import import_module
+    mod = import_module("clio-ext-lib.validate_processes")
+    code = mod.run(
+        packages_path=args.packages_path,
+        package=args.package,
+    )
+    sys.exit(code)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -311,6 +326,15 @@ def main():
     p_oauth.add_argument("--reset-client", action="store_true", help="Reset client in DB")
     p_oauth.add_argument("--rebind-ports", action="store_true", default=None)
     p_oauth.set_defaults(func=cmd_deploy_oauth)
+
+    # --- validate-processes ---
+    p_val = subparsers.add_parser(
+        "validate-processes",
+        help="Find process schemas with unoptimized Read Data elements (reading all columns)",
+    )
+    p_val.add_argument("-p", "--packages-path", required=True, help="Path to packages directory")
+    p_val.add_argument("-k", "--package", default=None, help="Scan only this package (by name)")
+    p_val.set_defaults(func=cmd_validate_processes)
 
     args = parser.parse_args()
 

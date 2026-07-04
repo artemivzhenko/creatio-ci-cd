@@ -106,6 +106,42 @@ to push all regardless of failures.
 
 ---
 
+**`validate-processes`** - find unoptimized Read Data elements in business processes
+
+```bash
+python clio-ext/clio-ext.py validate-processes -p <packages_path> [-k <package>]
+```
+
+Scans all process schemas in the packages directory and reports any "Read Data"
+element that reads all columns from an object instead of a specific column list.
+Reading all columns is unoptimized and can cause unnecessary load, especially on
+large tables.
+
+| Argument | Required | Description |
+|---|---|---|
+| `-p`, `--packages-path` | yes | Path to packages directory |
+| `-k`, `--package` | no | Scan only this package (by name) |
+
+Output example:
+
+```
+Found 1 unoptimized Read Data element(s) (reading all columns):
+
+[MyPackage]
+  MyProcessSchema (My business process)
+    element: ReadContactAllFields
+
+Total: 1
+```
+
+Exit code `0` = all optimized, `1` = issues found.
+
+Detection: process schemas are identified by `"ManagerName": "ProcessSchemaManager"` in
+`descriptor.json`. A "Read Data" element is unoptimized when its `EntityColumnMetaPathes`
+parameter has no column list set.
+
+---
+
 **`deploy-oauth`** - deploy OAuth 2.0 Identity Service
 
 Python orchestrator for setting up the Identity Service on IIS + PostgreSQL.

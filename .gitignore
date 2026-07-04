@@ -1,3 +1,5 @@
 backup/*
 logs/*
 repo/*
+workspace/*
+__pycache__/
